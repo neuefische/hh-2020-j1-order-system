@@ -10,7 +10,7 @@ This was an exercise to learn and repeat OOP
 5. Gebe alle Bestellungen aus
 6. nutze für die get Methoden als Rückgabewert ein Optional
 7. throw eine Exception wenn Produkte bestellt werden sollen die nicht existieren
-Nutze anstelle einer Product Klasse ein Interface und implementiere verschiedene Ausführungen
+8. Nutze anstelle einer Product Klasse ein Interface und implementiere verschiedene Ausführungen
 
 #### Bonus: 
 - schaue dir hamcrest an

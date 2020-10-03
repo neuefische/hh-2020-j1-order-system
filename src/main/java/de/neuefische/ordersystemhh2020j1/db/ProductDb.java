@@ -4,6 +4,7 @@ import de.neuefische.ordersystemhh2020j1.model.Product;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductDb {
 
@@ -17,4 +18,12 @@ public class ProductDb {
         return Collections.unmodifiableList(products);
     }
 
+    public Optional<Product> get(String productId) {
+        for (Product product : products) {
+            if(productId.equals(product.getId())){
+                return Optional.of(product);
+            }
+        }
+         return Optional.empty();
+    }
 }
