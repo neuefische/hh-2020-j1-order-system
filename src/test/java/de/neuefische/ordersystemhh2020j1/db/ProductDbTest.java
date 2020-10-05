@@ -12,10 +12,10 @@ import static org.hamcrest.Matchers.*;
 
 class ProductDbTest {
 
+    private final ProductDb productDb = new ProductDb();
+
     @Test
-    public void listShouldReturnAllProducts(){
-        //GIVEN
-        ProductDb productDb = new ProductDb();
+    public void listShouldReturnAllProducts() {
 
         //WHEN
         List<Product> list = productDb.list();
@@ -28,9 +28,7 @@ class ProductDbTest {
     }
 
     @Test
-    public void getShouldReturnProductWithId(){
-        //GIVEN
-        ProductDb productDb = new ProductDb();
+    public void getShouldReturnProductWithId() {
 
         //WHEN
         Optional<Product> product = productDb.get("tomate");
@@ -40,9 +38,7 @@ class ProductDbTest {
     }
 
     @Test
-    public void getShouldReturnEmptyOptionalWhenIdNotFound(){
-        //GIVEN
-        ProductDb productDb = new ProductDb();
+    public void getShouldReturnEmptyOptionalWhenIdNotFound() {
 
         //WHEN
         Optional<Product> product = productDb.get("flugzeug");

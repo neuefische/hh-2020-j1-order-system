@@ -15,14 +15,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class OrderServiceTest {
 
+    private final OrderDb orderDb = new OrderDb();
+    private final ProductDb productDb = new ProductDb();
+    private final OrderService orderService = new OrderService(orderDb, productDb);
+
+
     @Test
     public void createOrderShouldCreateANewOrderWithProducts() {
         //GIVEN
         List<String> products = List.of("tomate", "erbsen");
-        OrderDb orderDb = new OrderDb();
-        ProductDb productDb = new ProductDb();
-        OrderService orderService = new OrderService(orderDb, productDb);
-
         //WHEN
         Order order = orderService.createOrder(products);
 
@@ -36,9 +37,6 @@ class OrderServiceTest {
     @Test
     public void listShouldReturnAllOrders() {
         //GIVEN
-        OrderDb orderDb = new OrderDb();
-        ProductDb productDb = new ProductDb();
-        OrderService orderService = new OrderService(orderDb, productDb);
         orderDb.add(new Order("some-id", List.of("erbsen")));
         orderDb.add(new Order("other-id", List.of("erbsen", "tomate")));
 
@@ -55,9 +53,6 @@ class OrderServiceTest {
     public void createOrderShouldThrowIllegalArgumentExceptionWhenProductNotExists(){
         //GIVEN
         List<String> products = List.of("tomate", "erbsen", "flugzeug");
-        OrderDb orderDb = new OrderDb();
-        ProductDb productDb = new ProductDb();
-        OrderService orderService = new OrderService(orderDb, productDb);
 
         //WHEN
         try {
