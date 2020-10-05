@@ -8,13 +8,13 @@ public class OrderDb {
 
     private final ArrayList<Order> orders = new ArrayList<>();
 
-    public Order get(String id) {
+    public Optional<Order> get(String id) {
         for (Order order : orders) {
             if(Objects.equals(id, order.getId())){
-                return order;
+                return Optional.of(order);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public void add(Order order) {

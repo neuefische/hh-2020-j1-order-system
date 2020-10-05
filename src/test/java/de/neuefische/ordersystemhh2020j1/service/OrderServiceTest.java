@@ -5,6 +5,7 @@ import de.neuefische.ordersystemhh2020j1.model.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -23,10 +24,10 @@ class OrderServiceTest {
         Order order = orderService.createOrder(products);
 
         //THEN
-        Order savedOrder = orderDb.get(order.getId());
+        Optional<Order> savedOrder = orderDb.get(order.getId());
         assertThat(order.getId(), notNullValue());
         assertThat(order.getProducts(), containsInAnyOrder("tomate", "erbsen"));
-        assertThat(savedOrder, is(order));
+        assertThat(savedOrder.get(), is(order));
     }
 
     @Test

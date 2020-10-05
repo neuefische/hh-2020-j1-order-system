@@ -4,6 +4,7 @@ import de.neuefische.ordersystemhh2020j1.model.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -22,8 +23,8 @@ class OrderDbTest {
         orderDb.add(orderToSave);
 
         //THEN
-        Order order = orderDb.get("some-id");
-        assertThat(order, is(new Order(
+        Optional<Order> order = orderDb.get("some-id");
+        assertThat(order.get(), is(new Order(
                 "some-id",
                 List.of("product-1", "product-2")
         )));
@@ -43,6 +44,18 @@ class OrderDbTest {
         assertThat(orders, containsInAnyOrder(
                 new Order("some-id", List.of("erbsen")),
                 new Order("other-id", List.of("erbsen", "tomate"))));
+    }
+
+    @Test
+    public void getNotExistingIdShouldReturnEmptyOptional(){
+        //GIVEN
+        OrderDb orderDb = new OrderDb();
+
+        //WHEN
+        Optional<Order> order = orderDb.get("unknown-id");
+
+        //THEN
+        assertThat(order.isEmpty(), is(true));
     }
 
 }
