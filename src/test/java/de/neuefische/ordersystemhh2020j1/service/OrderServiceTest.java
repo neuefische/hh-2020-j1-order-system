@@ -1,6 +1,7 @@
 package de.neuefische.ordersystemhh2020j1.service;
 
 import de.neuefische.ordersystemhh2020j1.db.OrderDb;
+import de.neuefische.ordersystemhh2020j1.db.ProductDb;
 import de.neuefische.ordersystemhh2020j1.model.Order;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 class OrderServiceTest {
@@ -18,7 +20,8 @@ class OrderServiceTest {
         //GIVEN
         List<String> products = List.of("tomate", "erbsen");
         OrderDb orderDb = new OrderDb();
-        OrderService orderService = new OrderService(orderDb);
+        ProductDb productDb = new ProductDb();
+        OrderService orderService = new OrderService(orderDb, productDb);
 
         //WHEN
         Order order = orderService.createOrder(products);
@@ -34,7 +37,8 @@ class OrderServiceTest {
     public void listShouldReturnAllOrders() {
         //GIVEN
         OrderDb orderDb = new OrderDb();
-        OrderService orderService = new OrderService(orderDb);
+        ProductDb productDb = new ProductDb();
+        OrderService orderService = new OrderService(orderDb, productDb);
         orderDb.add(new Order("some-id", List.of("erbsen")));
         orderDb.add(new Order("other-id", List.of("erbsen", "tomate")));
 
@@ -45,6 +49,24 @@ class OrderServiceTest {
         assertThat(orders, containsInAnyOrder(
                 new Order("some-id", List.of("erbsen")),
                 new Order("other-id", List.of("erbsen", "tomate"))));
+    }
+
+    @Test
+    public void createOrderShouldThrowIllegalArgumentExceptionWhenProductNotExists(){
+        //GIVEN
+        List<String> products = List.of("tomate", "erbsen", "flugzeug");
+        OrderDb orderDb = new OrderDb();
+        ProductDb productDb = new ProductDb();
+        OrderService orderService = new OrderService(orderDb, productDb);
+
+        //WHEN
+        try {
+            orderService.createOrder(products);
+            fail("Exception not thrown");
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("product flugzeug not found!"));
+        }
+
     }
 
 }

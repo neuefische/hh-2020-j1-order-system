@@ -11,7 +11,7 @@ public class AppMain {
     public static void main(String[] args) {
         ProductDb productDb = new ProductDb();
         OrderDb orderDb = new OrderDb();
-        OrderService orderService = new OrderService(orderDb);
+        OrderService orderService = new OrderService(orderDb, productDb);
 
         System.out.println("All products");
         productDb.list().forEach(product -> System.out.println(product.getName()));

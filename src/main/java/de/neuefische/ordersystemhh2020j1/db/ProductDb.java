@@ -3,6 +3,7 @@ package de.neuefische.ordersystemhh2020j1.db;
 import de.neuefische.ordersystemhh2020j1.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductDb {
 
@@ -13,4 +14,12 @@ public class ProductDb {
         return products;
     }
 
+    public Optional<Product> get(String id) {
+        for (Product product : products) {
+            if(product.getId().equals(id)){
+                return Optional.of(product);
+            }
+        }
+        return Optional.empty();
+    }
 }
